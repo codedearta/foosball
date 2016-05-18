@@ -10,7 +10,8 @@
     "copy-html": "cp -R src/*.html public",
     "creatPublic": "mkdir -p public",
     "lint": "eslint . --ext .js --ext .jsx",
-    "build": "npm run creatPublic && npm run copy-font-awesome -s && npm run copy-html -s && webpack -p"
+    "build": "npm run creatPublic && npm run copy-font-awesome -s && npm run copy-html -s && webpack -p",
+    "publish": "npm run build -s && sh publish.sh"
   },
   "repository": {
     "type": "git",
