@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm prune && npm update && npm outdated",
-    "start": "webpack-dev-server --progress --colors",
+    "start": "webpack-dev-server --colors --no-info --compress --https --open",
     "copy-font-awesome": "cp -R node_modules/font-awesome/fonts/ public/fonts && cp -R node_modules/font-awesome/css public",
     "copy-html": "cp -R src/*.html public",
     "creatPublic": "mkdir -p public",
