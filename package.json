@@ -4,11 +4,13 @@
   "description": "this is the awsome foosball app",
   "main": "index.js",
   "scripts": {
-    "copy-font-awesome": "cp -R node_modules/font-awesome/fonts public && cp -R node_modules/font-awesome/css public",
+    "prestart": "npm prune && npm update && npm outdated",
+    "start": "webpack-dev-server --progress --colors",
+    "copy-font-awesome": "cp -R node_modules/font-awesome/fonts/ public/fonts && cp -R node_modules/font-awesome/css public",
     "copy-html": "cp -R src/*.html public",
+    "creatPublic": "mkdir -p public",
     "lint": "eslint . --ext .js --ext .jsx",
-    "build": "npm run copy-font-awesome -s && npm run copy-html -s && webpack -p",
-    "watch": "webpack-dev-server --progress --colors"
+    "build": "npm run creatPublic && npm run copy-font-awesome -s && npm run copy-html -s && webpack -p"
   },
   "repository": {
     "type": "git",
