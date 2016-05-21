@@ -4,7 +4,7 @@
   "description": "this is the awsome foosball app",
   "main": "index.js",
   "scripts": {
-    "prestart" : "npm prune && npm update",
+    "prestart": "npm prune && npm update",
     "start": "parallelshell 'webpack-dev-server --colors --https --open' 'npm run watch'",
     "copy-font-awesome": "cp -R node_modules/font-awesome/fonts/ public/fonts && cp -R node_modules/font-awesome/css public",
     "copy-html": "cp -R src/*.html public",
@@ -47,6 +47,8 @@
     "parallelshell": "^2.0.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-router": "^2.4.1",
+    "react-router-form": "^1.0.2",
     "watch": "^0.18.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"

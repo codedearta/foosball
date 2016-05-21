@@ -2,11 +2,13 @@ import React from 'react';
 
 class Players extends React.Component {
   render() {
-    const players = ['My-Yen', 'Sepp', 'Olga', 'Vlad', 'Anna', 'Dimtri'];
+    if (!this.props.players) {
+      return null;
+    }
     return (
       <select>
         {
-          players.map((player) =>
+          this.props.players.map((player) =>
             <option key={player} value={player}>{player}</option>
           )
         }
@@ -14,5 +16,9 @@ class Players extends React.Component {
     );
   }
 }
+
+Players.propTypes = {
+  players: React.PropTypes.array,
+};
 
 export default Players;

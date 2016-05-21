@@ -1,7 +1,16 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
-import offline from './offline.js';
-offline();
-
+import { render } from 'react-dom';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import App from './app.jsx';
 import Foosball from './foosball.jsx';
-ReactDOM.render(<Foosball/>, document.body);
+import Stats from './stats.jsx';
+
+render((
+  <Router history={hashHistory}>
+    <Route path="/" component={App}>
+      <IndexRoute component={Foosball} />
+      <Route path="stats" component={Stats} />
+      <Route path="foosball" component={Foosball} />
+    </Route>
+  </Router>
+), document.body);
