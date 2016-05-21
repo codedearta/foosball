@@ -1,19 +1,18 @@
 const path = require('path');
 const src = path.resolve(__dirname, 'src');
-const html = path.resolve(src);
 const js = path.resolve(src, 'js');
 const scss = path.resolve(src, 'scss');
-const publicHtml = path.resolve(__dirname, 'public');
-const publicJs = path.resolve(publicHtml, 'js');
+const publicBuild = path.resolve(__dirname, 'public');
+const publicJs = path.resolve(publicBuild, 'js');
 const webpack = require('webpack');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
-    entry: path.resolve(js,'main.js'),
+    entry: './src/js/main.jsx',
     output: {
         path: publicJs,
         filename: "bundle.js",
-        publicPath: publicHtml
+        publicPath: "public/js"
     },
     module: {
         preLoaders: [
