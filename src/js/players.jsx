@@ -2,7 +2,7 @@ import React from 'react';
 
 class Players extends React.Component {
   render() {
-    const players = ['My-Yens', 'Sepp', 'Olga', 'Vlad', 'Anna', 'Dimtri'];
+    const players = ['My-Yen', 'Sepp', 'Olga', 'Vlad', 'Anna', 'Dimtri'];
     return (
       <select>
         {

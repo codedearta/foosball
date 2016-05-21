@@ -10,7 +10,7 @@
     "copy-html": "cp -R src/*.html public",
     "creatPublic": "mkdir -p public",
     "lint": "eslint . --ext .js --ext .jsx",
-    "build": "npm run creatPublic && npm run copy-font-awesome -s && npm run copy-html && webpack",
+    "build": "npm run creatPublic && npm run copy-font-awesome -s && npm run copy-html && webpack && npm run build:sass -s",
     "build:sass": "node-sass src/scss/styles.scss public/css/styles.css",
     "watch": "parallelshell 'npm run watch:sass' 'npm run watch:html'",
     "watch:sass": "watch 'npm run build:sass' ./src/scss/",
