@@ -12,7 +12,7 @@ class PouchStore {
     console.log(player);
     return new Promise((resolve, reject) => {
       this.db.put(
-        { _id : player.name, date : new Date().toISOString() },
+        { _id : player.name, date : new Date().toISOString(), name : player.name },
         (err, result) => {
           if (!err) {
             resolve(result);
