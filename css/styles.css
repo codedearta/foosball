@@ -37,6 +37,9 @@ a.button {
   text-decoration: none;
   color: initial; }
 
+.error {
+  color: red; }
+
 /* _game.scss */
 #header {
   width: 100%;
