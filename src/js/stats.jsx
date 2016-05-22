@@ -47,6 +47,10 @@ class Stats extends React.Component {
           <Form id="stats_form" to="/foosball">
             <button type="submit" value="new_game">NEW GAME</button>
           </Form>
+
+          <Form id="new_player_form" to="/player">
+            <button type="submit" value="new_player">NEW PLAYER</button>
+          </Form>
         </div>
       );
     }
