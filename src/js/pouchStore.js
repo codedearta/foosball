@@ -9,10 +9,25 @@ class PouchStore {
   }
 
   savePlayer(player) {
-    console.log(player);
     return new Promise((resolve, reject) => {
       this.db.put(
-        { _id : player.name, date : new Date().toISOString(), name : player.name },
+        { _id : player.name, date : new Date().toISOString() },
+        (err, result) => {
+          if (!err) {
+            resolve(result);
+          }
+          else{
+            reject(err);
+          }
+        }
+      );
+    });
+  }
+
+  getAllPlayers() {
+    return new Promise((resolve, reject) => {
+      this.db.allDocs(
+        {include_docs: true, descending: true},
         (err, result) => {
           if (!err) {
             resolve(result);
@@ -26,4 +41,4 @@ class PouchStore {
   }
 }
 
-export default PouchStore;
+export default new PouchStore();

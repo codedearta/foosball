@@ -27,9 +27,19 @@ class Player extends React.Component {
         }
       );
     } else {
-      new PouchStore().savePlayer(player)
-        .then((savedPlayer) => console.log(`save player:"${savedPlayer}" to pouch`))
-        .catch((err) => console.log(err));
+      const storPromise = PouchStore.savePlayer(player);
+      storPromise
+        .then((savedPlayer) =>
+          console.log(`save player:"${savedPlayer}" to pouch`))
+        .catch((err) => {
+          // console.log(err);
+          e.preventDefault();
+          this.setState(
+            {
+              error: err,
+            }
+          );
+        });
     }
   }
 
