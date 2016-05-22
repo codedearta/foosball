@@ -62,11 +62,11 @@
 
 	var _foosball2 = _interopRequireDefault(_foosball);
 
-	var _stats = __webpack_require__(230);
+	var _stats = __webpack_require__(248);
 
 	var _stats2 = _interopRequireDefault(_stats);
 
-	var _player = __webpack_require__(231);
+	var _player = __webpack_require__(249);
 
 	var _player2 = _interopRequireDefault(_player);
 
@@ -25515,6 +25515,10 @@
 
 	var _reactRouterForm2 = _interopRequireDefault(_reactRouterForm);
 
+	var _pouchStore = __webpack_require__(230);
+
+	var _pouchStore2 = _interopRequireDefault(_pouchStore);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25531,16 +25535,59 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Foosball).call(this, props));
 
-	    _this.players = ['My-Yen', 'Sepp', 'Olga', 'Vlad', 'Anna', 'Dimtri'];
+	    _this.saveGame = _this.saveGame.bind(_this);
+	    _this.state = { error: null };
+	    _this.initPlayers();
 	    return _this;
 	  }
 
 	  _createClass(Foosball, [{
+	    key: 'initPlayers',
+	    value: function initPlayers() {
+	      var _this2 = this;
+
+	      _pouchStore2.default.getAllPlayers().then(function (savePlayers) {
+	        _this2.players = savePlayers.rows.map(function (doc) {
+	          return doc.id;
+	        });
+	        _this2.forceUpdate();
+	      }).catch(function (err) {
+	        return console.log(err);
+	      });
+	    }
+	  }, {
+	    key: 'saveGame',
+	    value: function saveGame(e, game) {
+	      console.log(e, game);
+	      // if (!player.name || player.name === '') {
+	      //   e.preventDefault();
+	      //   this.setState(
+	      //     {
+	      //       error: 'please type in a player name.',
+	      //     }
+	      //   );
+	      // } else {
+	      //   const storPromise = PouchStore.savePlayer(player);
+	      //   storPromise
+	      //     .then((savedPlayer) =>
+	      //       console.log(`save player:"${savedPlayer}" to pouch`))
+	      //     .catch((err) => {
+	      //       // console.log(err);
+	      //       e.preventDefault();
+	      //       this.setState(
+	      //         {
+	      //           error: err,
+	      //         }
+	      //       );
+	      //     });
+	      // }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        _reactRouterForm2.default,
-	        { id: 'game', to: '/stats' },
+	        { id: 'game', to: '/stats', onSubmit: this.saveGame },
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'team_red', className: 'team' },
@@ -25980,320 +26027,12 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouterForm = __webpack_require__(228);
-
-	var _reactRouterForm2 = _interopRequireDefault(_reactRouterForm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Stats = function (_React$Component) {
-	  _inherits(Stats, _React$Component);
-
-	  function Stats() {
-	    _classCallCheck(this, Stats);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Stats).apply(this, arguments));
-	  }
-
-	  _createClass(Stats, [{
-	    key: 'render',
-	    value: function render() {
-	      if (this.props) {
-	        return _react2.default.createElement(
-	          'div',
-	          { id: 'stats' },
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'stats_title' },
-	            'STATS'
-	          ),
-	          _react2.default.createElement(
-	            'table',
-	            { id: 'stats_table' },
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Name'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Games'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Points'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Ratio'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                'My-Yen'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '5'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '5'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '1'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                'Sepp'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '5'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '3'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '0.6'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                'Olga'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '5'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '2'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '0.4'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                'Vlad'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '5'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '2'
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                '0.4'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouterForm2.default,
-	            { id: 'stats_form', to: '/foosball' },
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', value: 'new_game' },
-	              'NEW GAME'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouterForm2.default,
-	            { id: 'new_player_form', to: '/player' },
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', value: 'new_player' },
-	              'NEW PLAYER'
-	            )
-	          )
-	        );
-	      }
-	      return null;
-	    }
-	  }]);
-
-	  return Stats;
-	}(_react2.default.Component);
-
-		exports.default = Stats;
-
-/***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouterForm = __webpack_require__(228);
-
-	var _reactRouterForm2 = _interopRequireDefault(_reactRouterForm);
-
-	var _pouchStore = __webpack_require__(232);
-
-	var _pouchStore2 = _interopRequireDefault(_pouchStore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Player = function (_React$Component) {
-	  _inherits(Player, _React$Component);
-
-	  function Player(props) {
-	    _classCallCheck(this, Player);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
-
-	    _this.savePlayer = _this.savePlayer.bind(_this);
-	    _this.state = { error: null };
-	    return _this;
-	  }
-
-	  // componentWillReceiveProps(nextProps) {
-	  //   const { state } = this.props.location;
-	  //   const { state: nextState } = nextProps.location;
-	  //   if (nextState && nextState.error && (!state || state.error !== nextState.error)) {
-	  //     this.setState({ error: nextState.error });
-	  //   }
-	  // }
-
-	  _createClass(Player, [{
-	    key: 'savePlayer',
-	    value: function savePlayer(e, player) {
-	      if (!player.name || player.name === '') {
-	        e.preventDefault();
-	        this.setState({
-	          error: 'please type in a player name.'
-	        });
-	      } else {
-	        new _pouchStore2.default().savePlayer(player).then(function (savedPlayer) {
-	          return console.log('save player:"' + savedPlayer + '" to pouch');
-	        }).catch(function (err) {
-	          return console.log(err);
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      // let {location} = this.props
-	      // let player = location.state && location.state.player || {};
-	      return _react2.default.createElement(
-	        _reactRouterForm2.default,
-	        { to: '/stats', onSubmit: this.savePlayer },
-	        this.state.error && _react2.default.createElement(
-	          'p',
-	          { className: 'error' },
-	          this.state.error
-	        ),
-	        _react2.default.createElement(
-	          'label',
-	          { htmlFor: 'name', value: 'Name' },
-	          'player name'
-	        ),
-	        _react2.default.createElement('input', { type: 'text', id: 'name' }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'submit', value: 'new_player' },
-	          'ADD'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Player;
-	}(_react2.default.Component);
-
-	Player.propTypes = {
-	  location: _react2.default.PropTypes.object
-	};
-
-		exports.default = Player;
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by sepp on 18.05.16.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 
-	var _pouchdb = __webpack_require__(233);
+	var _pouchdb = __webpack_require__(231);
 
 	var _pouchdb2 = _interopRequireDefault(_pouchdb);
 
@@ -26313,9 +26052,23 @@
 	    value: function savePlayer(player) {
 	      var _this = this;
 
-	      console.log(player);
 	      return new Promise(function (resolve, reject) {
-	        _this.db.put({ _id: player.name, date: new Date().toISOString(), name: player.name }, function (err, result) {
+	        _this.db.put({ _id: player.name, date: new Date().toISOString() }, function (err, result) {
+	          if (!err) {
+	            resolve(result);
+	          } else {
+	            reject(err);
+	          }
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'getAllPlayers',
+	    value: function getAllPlayers() {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this2.db.allDocs({ include_docs: true, descending: true }, function (err, result) {
 	          if (!err) {
 	            resolve(result);
 	          } else {
@@ -26329,29 +26082,29 @@
 	  return PouchStore;
 	}();
 
-		exports.default = PouchStore;
+		exports.default = new PouchStore();
 
 /***/ },
-/* 233 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, global) {'use strict';
 
 	function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-	var jsExtend = __webpack_require__(235);
+	var jsExtend = __webpack_require__(233);
 	var jsExtend__default = _interopDefault(jsExtend);
-	var debug = _interopDefault(__webpack_require__(236));
-	var inherits = _interopDefault(__webpack_require__(239));
-	var lie = _interopDefault(__webpack_require__(240));
-	var pouchdbCollections = __webpack_require__(242);
-	var getArguments = _interopDefault(__webpack_require__(243));
-	var events = __webpack_require__(244);
-	var scopedEval = _interopDefault(__webpack_require__(245));
-	var pouchCollate = __webpack_require__(246);
+	var debug = _interopDefault(__webpack_require__(234));
+	var inherits = _interopDefault(__webpack_require__(237));
+	var lie = _interopDefault(__webpack_require__(238));
+	var pouchdbCollections = __webpack_require__(240);
+	var getArguments = _interopDefault(__webpack_require__(241));
+	var events = __webpack_require__(242);
+	var scopedEval = _interopDefault(__webpack_require__(243));
+	var pouchCollate = __webpack_require__(244);
 	var pouchCollate__default = _interopDefault(pouchCollate);
-	var Md5 = _interopDefault(__webpack_require__(248));
-	var vuvuzela = _interopDefault(__webpack_require__(249));
+	var Md5 = _interopDefault(__webpack_require__(246));
+	var vuvuzela = _interopDefault(__webpack_require__(247));
 
 	/* istanbul ignore next */
 	var PouchPromise = typeof Promise === 'function' ? Promise : lie;
@@ -36846,10 +36599,10 @@
 	});
 
 	module.exports = PouchDB;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(234), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(232), (function() { return this; }())))
 
 /***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -36949,7 +36702,7 @@
 
 
 /***/ },
-/* 235 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(factory) {
@@ -36988,7 +36741,7 @@
 
 
 /***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -36998,7 +36751,7 @@
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(237);
+	exports = module.exports = __webpack_require__(235);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -37162,7 +36915,7 @@
 
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -37178,7 +36931,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(238);
+	exports.humanize = __webpack_require__(236);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -37365,7 +37118,7 @@
 
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports) {
 
 	/**
@@ -37496,7 +37249,7 @@
 
 
 /***/ },
-/* 239 */
+/* 237 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -37525,11 +37278,11 @@
 
 
 /***/ },
-/* 240 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	var immediate = __webpack_require__(241);
+	var immediate = __webpack_require__(239);
 
 	/* istanbul ignore next */
 	function INTERNAL() {}
@@ -37807,10 +37560,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(234)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(232)))
 
 /***/ },
-/* 241 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {'use strict';
@@ -37887,10 +37640,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(234)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(232)))
 
 /***/ },
-/* 242 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37965,7 +37718,7 @@
 
 
 /***/ },
-/* 243 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37989,7 +37742,7 @@
 	}
 
 /***/ },
-/* 244 */
+/* 242 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -38293,7 +38046,7 @@
 
 
 /***/ },
-/* 245 */
+/* 243 */
 /***/ function(module, exports) {
 
 	// Generated by CoffeeScript 1.9.2
@@ -38321,7 +38074,7 @@
 
 
 /***/ },
-/* 246 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38330,7 +38083,7 @@
 	var MAGNITUDE_DIGITS = 3; // ditto
 	var SEP = ''; // set to '_' for easier debugging 
 
-	var utils = __webpack_require__(247);
+	var utils = __webpack_require__(245);
 
 	exports.collate = function (a, b) {
 
@@ -38680,7 +38433,7 @@
 
 
 /***/ },
-/* 247 */
+/* 245 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38755,7 +38508,7 @@
 	};
 
 /***/ },
-/* 248 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (factory) {
@@ -39464,7 +39217,7 @@
 
 
 /***/ },
-/* 249 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39641,6 +39394,321 @@
 	  }
 	};
 
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouterForm = __webpack_require__(228);
+
+	var _reactRouterForm2 = _interopRequireDefault(_reactRouterForm);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Stats = function (_React$Component) {
+	  _inherits(Stats, _React$Component);
+
+	  function Stats() {
+	    _classCallCheck(this, Stats);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Stats).apply(this, arguments));
+	  }
+
+	  _createClass(Stats, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.props) {
+	        return _react2.default.createElement(
+	          'div',
+	          { id: 'stats' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'stats_title' },
+	            'STATS'
+	          ),
+	          _react2.default.createElement(
+	            'table',
+	            { id: 'stats_table' },
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Name'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Games'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Points'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Ratio'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                'My-Yen'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '5'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '5'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '1'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                'Sepp'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '5'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '3'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '0.6'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                'Olga'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '5'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '2'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '0.4'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                'Vlad'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '5'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '2'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '0.4'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterForm2.default,
+	            { id: 'stats_form', to: '/foosball' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', value: 'new_game' },
+	              'NEW GAME'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterForm2.default,
+	            { id: 'new_player_form', to: '/player' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', value: 'new_player' },
+	              'NEW PLAYER'
+	            )
+	          )
+	        );
+	      }
+	      return null;
+	    }
+	  }]);
+
+	  return Stats;
+	}(_react2.default.Component);
+
+		exports.default = Stats;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouterForm = __webpack_require__(228);
+
+	var _reactRouterForm2 = _interopRequireDefault(_reactRouterForm);
+
+	var _pouchStore = __webpack_require__(230);
+
+	var _pouchStore2 = _interopRequireDefault(_pouchStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Player = function (_React$Component) {
+	  _inherits(Player, _React$Component);
+
+	  function Player(props) {
+	    _classCallCheck(this, Player);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
+
+	    _this.savePlayer = _this.savePlayer.bind(_this);
+	    _this.state = { error: null };
+	    return _this;
+	  }
+
+	  // componentWillReceiveProps(nextProps) {
+	  //   const { state } = this.props.location;
+	  //   const { state: nextState } = nextProps.location;
+	  //   if (nextState && nextState.error && (!state || state.error !== nextState.error)) {
+	  //     this.setState({ error: nextState.error });
+	  //   }
+	  // }
+
+	  _createClass(Player, [{
+	    key: 'savePlayer',
+	    value: function savePlayer(e, player) {
+	      var _this2 = this;
+
+	      if (!player.name || player.name === '') {
+	        e.preventDefault();
+	        this.setState({
+	          error: 'please type in a player name.'
+	        });
+	      } else {
+	        var storPromise = _pouchStore2.default.savePlayer(player);
+	        storPromise.then(function (savedPlayer) {
+	          return console.log('save player:"' + savedPlayer + '" to pouch');
+	        }).catch(function (err) {
+	          // console.log(err);
+	          e.preventDefault();
+	          _this2.setState({
+	            error: err
+	          });
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      // let {location} = this.props
+	      // let player = location.state && location.state.player || {};
+	      return _react2.default.createElement(
+	        _reactRouterForm2.default,
+	        { to: '/stats', onSubmit: this.savePlayer },
+	        this.state.error && _react2.default.createElement(
+	          'p',
+	          { className: 'error' },
+	          this.state.error
+	        ),
+	        _react2.default.createElement(
+	          'label',
+	          { htmlFor: 'name', value: 'Name' },
+	          'player name'
+	        ),
+	        _react2.default.createElement('input', { type: 'text', id: 'name' }),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'submit', value: 'new_player' },
+	          'ADD'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Player;
+	}(_react2.default.Component);
+
+	Player.propTypes = {
+	  location: _react2.default.PropTypes.object
+	};
+
+		exports.default = Player;
 
 /***/ }
 /******/ ]);
