@@ -13,6 +13,7 @@ render((
       <Route path="stats" component={Stats} />
       <Route path="foosball" component={Foosball} />
       <Route path="player" component={Player} />
+      <Route path="access_token=*" component={Stats} />
     </Route>
   </Router>
 ), document.body);

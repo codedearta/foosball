@@ -2,6 +2,17 @@ import React from 'react';
 import Form from 'react-router-form';
 
 class Stats extends React.Component {
+  constructor(props) {
+    super(props);
+    this.showLock = this.showLock.bind(this);
+  }
+
+  showLock() {
+    // We receive lock from the parent component in this case
+    // If you instantiate it in this component, just do this.lock.show()
+    this.props.lock.show();
+  }
+
   render() {
     if (this.props) {
       return (
@@ -51,11 +62,17 @@ class Stats extends React.Component {
           <Form id="new_player_form" to="/player">
             <button type="submit" value="new_player">NEW PLAYER</button>
           </Form>
+
+          <button type="submit" value="sign_in" onClick={this.showLock} >SIGN IN</button>
         </div>
       );
     }
     return null;
   }
 }
+
+Stats.propTypes = {
+  lock: React.PropTypes.object,
+};
 
 export default Stats;
