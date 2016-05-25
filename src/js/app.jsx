@@ -7,12 +7,11 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { profile: { nickname: 'sepp' } };
+    this.state = { profile: { nickname: 'no name' } };
   }
 
   componentDidMount() {
     Authentication.getProfile(Authentication.getIdToken()).then(profile => {
-      console.log(profile);
       this.setState({ profile });
       PouchStore.savePlayer(profile);
     }

@@ -1,10 +1,17 @@
 import React from 'react';
 import Form from 'react-router-form';
+import PouchStore from './pouchStore.js';
 
 class Stats extends React.Component {
   constructor(props) {
     super(props);
     this.showLock = this.showLock.bind(this);
+  }
+
+  componentDidMount() {
+    PouchStore.getAllGames().then(allGames => {
+      this.setState(allGames);
+    });
   }
 
   showLock() {

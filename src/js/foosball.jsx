@@ -12,8 +12,7 @@ class Foosball extends React.Component {
   componentDidMount() {
     PouchStore.getAllPlayers()
       .then((savedPlayers) => {
-        const players = savedPlayers.rows.map(savedPlayer => savedPlayer.doc);
-        this.setState({ error: null, players });
+        this.setState({ error: null, players: savedPlayers });
       })
       .catch((err) => this.setState({ error: err })
     );
