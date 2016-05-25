@@ -1,27 +1,22 @@
 import React from 'react';
-import Auth0Lock from 'auth0-lock';
+import Authentication from './authentication.js';
+import PouchStore from './pouchStore.js';
 
 class App extends React.Component {
 
-  componentWillMount() {
-    this.lock = new Auth0Lock('y3ng0ydD00ZO865h3Xp3P1MtqKyCNKqJ', 'dearta.eu.auth0.com');
-    this.setState({ idToken: this.getIdToken() });
+
+  constructor(props) {
+    super(props);
+    this.state = { profile: { nickname: 'sepp' } };
   }
 
-  getIdToken() {
-    let idToken = localStorage.getItem('userToken');
-    const authHash = this.lock.parseHash(window.location.hash);
-    if (!idToken && authHash) {
-      if (authHash.id_token) {
-        idToken = authHash.id_token;
-        localStorage.setItem('userToken', authHash.id_token);
-      }
-      if (authHash.error) {
-        console.log('Error signing in', authHash);
-        return null;
-      }
+  componentDidMount() {
+    Authentication.getProfile(Authentication.getIdToken()).then(profile => {
+      console.log(profile);
+      this.setState({ profile });
+      PouchStore.savePlayer(profile);
     }
-    return idToken;
+    );
   }
 
   render() {
@@ -29,14 +24,12 @@ class App extends React.Component {
       return null;
     }
 
-    const children = React.cloneElement(this.props.children, { lock: this.lock });
-
     return (
       <div id="foosballApp">
         <div id="header">
-          <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE
+          <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE<br></br>
         </div>
-        {children}
+        {this.props.children}
       </div>
     );
   }

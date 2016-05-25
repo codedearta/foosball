@@ -9,19 +9,14 @@ class PouchStore {
   }
 
   savePlayer(player) {
-    return new Promise((resolve, reject) => {
-      this.db.put(
-        { _id : player.name, date : new Date().toISOString() },
-        (err, result) => {
-          if (!err) {
-            resolve(result);
-          }
-          else{
-            reject(err);
-          }
-        }
-      );
-    });
+    this.db.get(player.user_id).catch(() =>
+      this.db.put(Object.assign({ date: new Date().toISOString() }, player), player.user_id)
+    );
+  }
+
+  saveGame(game) {
+    var id = new Date().getTime().toString();
+    this.db.put(Object.assign({ date: new Date().toISOString(), league: 'itv' }, game), id);
   }
 
   getAllPlayers() {
