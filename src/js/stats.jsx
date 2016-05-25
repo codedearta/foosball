@@ -44,6 +44,10 @@ class Stats extends React.Component {
     ).length;
   }
 
+  logOut() {
+    localStorage.removeItem('idToken');
+  }
+
   render() {
     if (this.props) {
       return (
@@ -69,6 +73,10 @@ class Stats extends React.Component {
 
           <Form id="stats_form" to="/foosball">
             <button type="submit" value="new_game">NEW GAME</button>
+          </Form>
+
+          <Form id="logOut" to="/">
+            <button type="submit" value="logout" onClick={this.logOut}>LOGOUT</button>
           </Form>
         </div>
       );
