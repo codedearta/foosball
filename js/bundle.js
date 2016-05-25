@@ -61733,6 +61733,11 @@
 	      }).length;
 	    }
 	  }, {
+	    key: 'logOut',
+	    value: function logOut() {
+	      localStorage.removeItem('idToken');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.props) {
@@ -61805,6 +61810,15 @@
 	              'button',
 	              { type: 'submit', value: 'new_game' },
 	              'NEW GAME'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterForm2.default,
+	            { id: 'logOut', to: '/' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', value: 'logout', onClick: this.logOut },
+	              'LOGOUT'
 	            )
 	          )
 	        );
