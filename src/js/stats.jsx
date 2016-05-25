@@ -5,19 +5,43 @@ import PouchStore from './pouchStore.js';
 class Stats extends React.Component {
   constructor(props) {
     super(props);
-    this.showLock = this.showLock.bind(this);
+    this.state = { stats: [] };
   }
 
   componentDidMount() {
-    PouchStore.getAllGames().then(allGames => {
-      this.setState(allGames);
+    PouchStore.getAllGames().then(games => {
+      PouchStore.getAllPlayers().then(players => {
+        const stats = players.map(player => {
+          const gamesPlayed = this.gamesFor(player, games);
+          const gamesWon = this.pointsFor(player, games);
+          const ratio = gamesPlayed > 0 ? gamesWon / gamesPlayed : 0;
+          return {
+            name: player.nickname,
+            games: gamesPlayed,
+            points: gamesWon,
+            ratio,
+          };
+        }).sort((statA, statB) => statB.ratio - statA.ratio);
+        console.log(stats);
+        this.setState({ stats });
+      });
     });
   }
 
-  showLock() {
-    // We receive lock from the parent component in this case
-    // If you instantiate it in this component, just do this.lock.show()
-    this.props.lock.show();
+  pointsFor(player, games) {
+    return games.filter(game => {
+      if (game.winningTeam === 'red') {
+        return game.teamRed.some(userId => userId === player.user_id);
+      }
+      return game.teamBlue.some(userId => userId === player.user_id);
+    }).length;
+  }
+
+  gamesFor(player, games) {
+    return games.filter(game =>
+      game.teamBlue.some(userId => userId === player.user_id) ||
+      game.teamRed.some(userId => userId === player.user_id)
+    ).length;
   }
 
   render() {
@@ -35,51 +59,22 @@ class Stats extends React.Component {
               <th>Points</th>
               <th>Ratio</th>
             </tr>
-            <tr>
-              <td>My-Yen</td>
-              <td>5</td>
-              <td>5</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>Sepp</td>
-              <td>5</td>
-              <td>3</td>
-              <td>0.6</td>
-
-            </tr>
-            <tr>
-              <td>Olga</td>
-              <td>5</td>
-              <td>2</td>
-              <td>0.4</td>
-            </tr>
-            <tr>
-              <td>Vlad</td>
-              <td>5</td>
-              <td>2</td>
-              <td>0.4</td>
-            </tr>
+            {this.state.stats.map(stat => <tr>
+              <td>{stat.name}</td>
+              <td>{stat.games}</td>
+              <td>{stat.points}</td>
+              <td>{stat.ratio}</td>
+            </tr>)}
           </table>
 
           <Form id="stats_form" to="/foosball">
             <button type="submit" value="new_game">NEW GAME</button>
           </Form>
-
-          <Form id="new_player_form" to="/player">
-            <button type="submit" value="new_player">NEW PLAYER</button>
-          </Form>
-
-          <button type="submit" value="sign_in" onClick={this.showLock} >SIGN IN</button>
         </div>
       );
     }
     return null;
   }
 }
-
-Stats.propTypes = {
-  lock: React.PropTypes.object,
-};
 
 export default Stats;
