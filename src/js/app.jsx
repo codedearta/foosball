@@ -28,7 +28,7 @@ class App extends React.Component {
         <div id="header">
           <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE<br></br>
         </div>
-        <div>{this.state.error}</div>
+        <div>error: {this.state.error}</div>
       </div>);
     }
     if (!this.state.profile) {
@@ -39,7 +39,7 @@ class App extends React.Component {
         <div>load user profile...</div>
       </div>);
     }
-    
+
     return (
       <div id="foosballApp">
         <div id="header">
