@@ -70,7 +70,7 @@ class Stats extends React.Component {
             </tr>)}
           </table>
 
-          <Form id="stats_form" to="/foosball">
+          <Form id="stats_form" to="/">
             <button type="submit" value="new_game">NEW GAME</button>
           </Form>
 

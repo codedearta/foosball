@@ -23,7 +23,7 @@ class App extends React.Component {
     if (!this.props.children) {
       return null;
     }
-    if(this.state.error) {
+    if (this.state.error) {
       return (<div id="foosballApp">
         <div id="header">
           <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE<br></br>
@@ -45,7 +45,7 @@ class App extends React.Component {
         <div id="header">
           <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE<br></br>
         </div>
-        {this.props.children}
+        game:{this.props.children}
       </div>
     );
   }

@@ -13,7 +13,6 @@ if (Authentication.getIdToken()) {
       <Route path="/" component={App} >
         <IndexRoute component={Foosball} />
         <Route path="stats" component={Stats} />
-        <Route path="foosball" component={Foosball} />
         <Route path="access_token=*" component={Foosball} />
       </Route>
     </Router>
