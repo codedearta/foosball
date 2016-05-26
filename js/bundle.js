@@ -25485,6 +25485,8 @@
 	      _authentication2.default.getProfile(_authentication2.default.getIdToken()).then(function (profile) {
 	        return _pouchStore2.default.savePlayer(profile).then(function () {
 	          return _this2.setState({ profile: profile });
+	        }).catch(function (error) {
+	          return _this2.setState({ error: error });
 	        });
 	      });
 	    }
@@ -25493,6 +25495,24 @@
 	    value: function render() {
 	      if (!this.props.children) {
 	        return null;
+	      }
+	      if (this.state.error) {
+	        return _react2.default.createElement(
+	          'div',
+	          { id: 'foosballApp' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'header' },
+	            _react2.default.createElement('i', { className: 'fa fa-futbol-o', 'aria-hidden': 'true' }),
+	            'FOOSBALL CHALLENGE',
+	            _react2.default.createElement('br', null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            this.state.error
+	          )
+	        );
 	      }
 	      if (!this.state.profile) {
 	        return _react2.default.createElement(
