@@ -22,7 +22,6 @@ class Stats extends React.Component {
             ratio,
           };
         }).sort((statA, statB) => statB.ratio - statA.ratio);
-        console.log(stats);
         this.setState({ stats });
       });
     });

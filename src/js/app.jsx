@@ -7,20 +7,26 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { profile: { nickname: 'no name' } };
+    this.state = { profile: null };
   }
 
   componentDidMount() {
-    Authentication.getProfile(Authentication.getIdToken()).then(profile => {
-      this.setState({ profile });
-      PouchStore.savePlayer(profile);
-    }
-    );
+    Authentication.getProfile(Authentication.getIdToken()).then(profile =>
+      PouchStore.savePlayer(profile).then(() =>
+        this.setState({ profile })));
   }
 
   render() {
     if (!this.props.children) {
       return null;
+    }
+    if (!this.state.profile) {
+      return (<div id="foosballApp">
+        <div id="header">
+          <i className="fa fa-futbol-o" aria-hidden="true"></i>FOOSBALL CHALLENGE<br></br>
+        </div>
+        <div>load user profile...</div>
+      </div>);
     }
 
     return (

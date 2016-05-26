@@ -10,7 +10,7 @@ class PouchStore {
 
   savePlayer(player) {
     console.log('savePlayer',player)
-    this.db.get(player.user_id).catch(() =>
+    return this.db.get(player.user_id).catch(() =>
       this.db.put(
         Object.assign(
           {
@@ -25,7 +25,7 @@ class PouchStore {
 
   saveGame(game) {
     var id = new Date().getTime().toString();
-    this.db.put(
+    return this.db.put(
       Object.assign(
         {
           date: new Date().toISOString(),
