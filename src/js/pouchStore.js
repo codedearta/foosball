@@ -5,10 +5,11 @@ import PouchDB from 'pouchdb';
 
 class PouchStore {
   constructor() {
-    this.db = new PouchDB('foosball');
+    this.db = new PouchDB('foosball2');
   }
 
   savePlayer(player) {
+    console.log('savePlayer',player)
     this.db.get(player.user_id).catch(() =>
       this.db.put(
         Object.assign(
@@ -29,10 +30,11 @@ class PouchStore {
         {
           date: new Date().toISOString(),
           league: 'itv',
-          type: 'game'
+          type: 'game',
+          _id: id
         },
-        game),
-      id
+        game
+      )
     );
   }
 
