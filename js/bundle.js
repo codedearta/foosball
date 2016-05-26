@@ -81,7 +81,6 @@
 	      { path: '/', component: _app2.default },
 	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _foosball2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'stats', component: _stats2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'foosball', component: _foosball2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'access_token=*', component: _foosball2.default })
 	    )
 	  ), document.body);
@@ -25544,6 +25543,7 @@
 	          'FOOSBALL CHALLENGE',
 	          _react2.default.createElement('br', null)
 	        ),
+	        'game:',
 	        this.props.children
 	      );
 	    }
@@ -61846,7 +61846,7 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactRouterForm2.default,
-	            { id: 'stats_form', to: '/foosball' },
+	            { id: 'stats_form', to: '/' },
 	            _react2.default.createElement(
 	              'button',
 	              { type: 'submit', value: 'new_game' },
