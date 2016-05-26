@@ -25510,6 +25510,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
+	            'error: ',
 	            this.state.error
 	          )
 	        );
