@@ -48718,7 +48718,7 @@
 	  function PouchStore() {
 	    _classCallCheck(this, PouchStore);
 
-	    this.db = new _pouchdb2.default('foosball');
+	    this.db = new _pouchdb2.default('foosball2');
 	  }
 
 	  _createClass(PouchStore, [{
@@ -48726,6 +48726,7 @@
 	    value: function savePlayer(player) {
 	      var _this = this;
 
+	      console.log('savePlayer', player);
 	      this.db.get(player.user_id).catch(function () {
 	        return _this.db.put(Object.assign({
 	          date: new Date().toISOString(),
@@ -48740,8 +48741,9 @@
 	      this.db.put(Object.assign({
 	        date: new Date().toISOString(),
 	        league: 'itv',
-	        type: 'game'
-	      }, game), id);
+	        type: 'game',
+	        _id: id
+	      }, game));
 	    }
 	  }, {
 	    key: 'getAllPlayers',
