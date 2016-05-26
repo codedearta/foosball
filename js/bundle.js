@@ -25473,7 +25473,7 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-	    _this.state = { profile: { nickname: 'no name' } };
+	    _this.state = { profile: null };
 	    return _this;
 	  }
 
@@ -25483,8 +25483,9 @@
 	      var _this2 = this;
 
 	      _authentication2.default.getProfile(_authentication2.default.getIdToken()).then(function (profile) {
-	        _this2.setState({ profile: profile });
-	        _pouchStore2.default.savePlayer(profile);
+	        return _pouchStore2.default.savePlayer(profile).then(function () {
+	          return _this2.setState({ profile: profile });
+	        });
 	      });
 	    }
 	  }, {
@@ -25492,6 +25493,24 @@
 	    value: function render() {
 	      if (!this.props.children) {
 	        return null;
+	      }
+	      if (!this.state.profile) {
+	        return _react2.default.createElement(
+	          'div',
+	          { id: 'foosballApp' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'header' },
+	            _react2.default.createElement('i', { className: 'fa fa-futbol-o', 'aria-hidden': 'true' }),
+	            'FOOSBALL CHALLENGE',
+	            _react2.default.createElement('br', null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'load user profile...'
+	          )
+	        );
 	      }
 
 	      return _react2.default.createElement(
@@ -48727,7 +48746,7 @@
 	      var _this = this;
 
 	      console.log('savePlayer', player);
-	      this.db.get(player.user_id).catch(function () {
+	      return this.db.get(player.user_id).catch(function () {
 	        return _this.db.put(Object.assign({
 	          date: new Date().toISOString(),
 	          type: 'player'
@@ -48738,7 +48757,7 @@
 	    key: 'saveGame',
 	    value: function saveGame(game) {
 	      var id = new Date().getTime().toString();
-	      this.db.put(Object.assign({
+	      return this.db.put(Object.assign({
 	        date: new Date().toISOString(),
 	        league: 'itv',
 	        type: 'game',
@@ -61704,7 +61723,6 @@
 	          }).sort(function (statA, statB) {
 	            return statB.ratio - statA.ratio;
 	          });
-	          console.log(stats);
 	          _this2.setState({ stats: stats });
 	        });
 	      });
