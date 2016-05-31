@@ -1,14 +1,16 @@
 import React from 'react';
 import Form from 'react-router-form';
 import PouchStore from './pouchStore.js';
+import SecureComponent from './secureComponent.jsx';
 
-class Stats extends React.Component {
+class Stats extends SecureComponent {
   constructor(props) {
     super(props);
     this.state = { stats: [] };
   }
 
   componentDidMount() {
+    super.componentDidMount();
     PouchStore.getAllGames().then(games => {
       PouchStore.getAllPlayers().then(players => {
         const stats = players.map(player => {
@@ -22,9 +24,9 @@ class Stats extends React.Component {
             ratio,
           };
         }).sort((statA, statB) => statB.ratio - statA.ratio);
-        this.setState({ stats });
+        this.setState(Object.assign(this.state, { stats }));
       });
-    });
+    }).catch(error => this.setState(Object.assign({ error }, this.state)));
   }
 
   pointsFor(player, games) {
@@ -48,7 +50,9 @@ class Stats extends React.Component {
   }
 
   render() {
-    if (this.props) {
+    if (this.state.error) {
+      return <div>{this.state.error}</div>;
+    } else if (this.isAuthenticated()) {
       return (
         <div id="stats">
           <div id="stats_title">
@@ -80,7 +84,8 @@ class Stats extends React.Component {
         </div>
       );
     }
-    return null;
+
+    return <div>not authenticated</div>;
   }
 }
 

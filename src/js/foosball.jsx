@@ -1,21 +1,22 @@
 import React from 'react';
 import Form from 'react-router-form';
 import PouchStore from './pouchStore.js';
+// import { Link } from 'react-router';
+import SecureComponent from './secureComponent.jsx';
+// import Authentication from './authentication.js';
 
-class Foosball extends React.Component {
+class Foosball extends SecureComponent {
   constructor(props) {
     super(props);
     this.saveGame = this.saveGame.bind(this);
-    this.state = { error: null, players: [] };
+    this.logOut = this.logOut.bind(this);
   }
 
   componentDidMount() {
+    super.componentDidMount();
     PouchStore.getAllPlayers()
-      .then((savedPlayers) => {
-        this.setState({ error: null, players: savedPlayers });
-      })
-      .catch((err) => this.setState({ error: err })
-    );
+      .then(savedPlayers => this.setState(Object.assign({ players: savedPlayers }, this.state)))
+      .catch(error => this.setState(Object.assign({ error }, this.state)));
   }
 
   saveGame(e, players) {
@@ -33,45 +34,58 @@ class Foosball extends React.Component {
     );
   }
 
+  logOut() {
+    localStorage.removeItem('idToken');
+  }
+
   render() {
-    return (
-      <Form id="game" to="/stats" onSubmit={this.saveGame} >
-        <div id="team_red" className="team">
-          <div className="players">
-            <select id="player_red_1">
-              {this.optionsFor(this.state.players)}
-            </select>
-            <select id="player_red_2">
-              {this.optionsFor(this.state.players)}
-            </select>
+    if (this.state.error) {
+      return <div>{this.state.error}</div>;
+    } else if (this.isAuthenticated()) {
+      // console.log('render new game');
+      return (
+        <Form id="game" to="/stats" onSubmit={this.saveGame}>
+          <div id="team_red" className="team">
+            <div className="players">
+              <select id="player_red_1">
+                {this.optionsFor(this.state.players)}
+              </select>
+              <select id="player_red_2">
+                {this.optionsFor(this.state.players)}
+              </select>
+            </div>
+            <div id="won_red" className="action">
+              <button
+                type="submit"
+                value="red_won"
+                onClick={() => this.setState(Object.assign({ winningTeam: 'red' }, this.state))}
+              >WON !!!
+              </button>
+            </div>
           </div>
-          <div id="won_red" className="action">
-            <button
-              type="submit"
-              value="red_won"
-              onClick={() => this.setState(Object.assign({ winningTeam: 'red' }, this.state))}
-            >WON !!!</button>
+          <div id="team_blue" className="team">
+            <div className="players">
+              <select id="player_blue_1">
+                {this.optionsFor(this.state.players)}
+              </select>
+              <select id="player_blue_2">
+                {this.optionsFor(this.state.players)}
+              </select>
+            </div>
+            <div id="won_blue" className="action">
+              <button
+                type="submit"
+                value="blue_won"
+                onClick={() => this.setState(Object.assign({ winningTeam: 'blue' }, this.state))}
+              >WON !!!
+              </button>
+            </div>
           </div>
-        </div>
-        <div id="team_blue" className="team">
-          <div className="players">
-            <select id="player_blue_1">
-              {this.optionsFor(this.state.players)}
-            </select>
-            <select id="player_blue_2">
-              {this.optionsFor(this.state.players)}
-            </select>
-          </div>
-          <div id="won_blue" className="action">
-            <button
-              type="submit"
-              value="blue_won"
-              onClick={() => this.setState(Object.assign({ winningTeam: 'blue' }, this.state))}
-            >WON !!!</button>
-          </div>
-        </div>
-      </Form>
-    );
+        </Form>
+      );
+    }
+
+    return <div>not authenticated</div>;
   }
 }
 

@@ -9,7 +9,7 @@ class PouchStore {
   }
 
   savePlayer(player) {
-    console.log('savePlayer',player)
+    // console.log('savePlayer',player)
     return this.db.get(player.user_id).catch(() =>
       this.db.put(
         Object.assign(
