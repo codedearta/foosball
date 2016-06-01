@@ -39920,7 +39920,7 @@
 	    key: 'logout',
 	    value: function logout() {
 	      // localStorage.removeItem('idToken');
-	      this.idToken = undefined;
+	      // this.idToken = undefined;
 	    }
 	  }]);
 
