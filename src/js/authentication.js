@@ -5,6 +5,7 @@ import Auth0Lock from 'auth0-lock';
 
 class Authentication {
   constructor() {
+    console.log('creeate new Authentication');
     this.lock = new Auth0Lock('y3ng0ydD00ZO865h3Xp3P1MtqKyCNKqJ', 'dearta.eu.auth0.com');
   }
 
@@ -21,18 +22,19 @@ class Authentication {
   }
 
   getIdToken() {
-    let idToken = localStorage.getItem('idToken');
-    if (!idToken) {
+
+    //let idToken = localStorage.getItem('idToken');
+    if (!this.idToken) {
       const authHash = this.lock.parseHash(window.location.hash);
       if (!authHash) {
         return undefined;
       } else if (authHash.error) {
         throw authHash.error;
       }
-      idToken = authHash.id_token;
-      localStorage.setItem('idToken', idToken);
+      this.idToken = authHash.id_token;
+      //localStorage.setItem('idToken', idToken);
     }
-    return idToken;
+    return this.idToken;
   }
 
   showLogin() {
@@ -40,7 +42,8 @@ class Authentication {
   }
 
   logout() {
-    localStorage.removeItem('idToken');
+    // localStorage.removeItem('idToken');
+    this.idToken = undefined;
   }
 }
 

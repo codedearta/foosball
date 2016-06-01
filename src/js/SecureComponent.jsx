@@ -20,7 +20,12 @@ class SecureComponent extends React.Component {
             PouchStore.getAllPlayers()
               .then(savedPlayers =>
                 this.setState(Object.assign({ players: savedPlayers }, this.state))))
-          .catch(error => this.setState(Object.assign({ error }, this.state))));
+        ).catch(error => {
+          console.log(error);
+          // this.setState(Object.assign({ error }, this.state));
+          Authentication.logout();
+          Authentication.showLogin();
+        });
       } else {
         Authentication.showLogin();
       }
