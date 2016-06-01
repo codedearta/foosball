@@ -60,18 +60,22 @@ class Stats extends SecureComponent {
           </div>
 
           <table id="stats_table">
-            <tr>
-              <th>Name</th>
-              <th>Games</th>
-              <th>Points</th>
-              <th>Ratio</th>
-            </tr>
-            {this.state.stats.map(stat => <tr>
-              <td>{stat.name}</td>
-              <td>{stat.games}</td>
-              <td>{stat.points}</td>
-              <td>{stat.ratio}</td>
-            </tr>)}
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Games</th>
+                <th>Points</th>
+                <th>Ratio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.stats.map((stat, idx) => <tr key={`${idx}_statRow`}>
+                <td>{stat.name}</td>
+                <td>{stat.games}</td>
+                <td>{stat.points}</td>
+                <td>{stat.ratio}</td>
+              </tr>)}
+            </tbody>
           </table>
 
           <Form id="stats_form" to="/">

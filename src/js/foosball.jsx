@@ -29,9 +29,13 @@ class Foosball extends SecureComponent {
   }
 
   optionsFor(players) {
-    return players.map((player) =>
-      <option key={player.user_id} value={player.user_id}>{player.nickname}</option>
-    );
+    if (players) {
+      return players.map((player) =>
+        <option key={player.user_id} value={player.user_id}>{player.nickname}</option>
+      );
+    }
+
+    return <option key="noPlayer" value="no_player">anonymous</option>;
   }
 
   logOut() {

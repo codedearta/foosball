@@ -6,7 +6,6 @@ import Foosball from './foosball.jsx';
 import Stats from './stats.jsx';
 import Authentication from './authentication.js';
 
-
 if (Authentication.getIdToken()) {
   render((
     <Router history={hashHistory} >
@@ -16,7 +15,7 @@ if (Authentication.getIdToken()) {
         <Route path="access_token=*" component={Foosball} />
       </Route>
     </Router>
-  ), document.body);
+  ), document.getElementById('app'));
 } else {
   Authentication.showLogin();
 }

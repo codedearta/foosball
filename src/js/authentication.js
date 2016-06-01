@@ -38,6 +38,10 @@ class Authentication {
   showLogin() {
     this.lock.show();
   }
+
+  logout() {
+    localStorage.removeItem('idToken');
+  }
 }
 
 export default new Authentication();
