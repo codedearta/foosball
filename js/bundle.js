@@ -39825,7 +39825,7 @@
 	            });
 	          }).catch(function (error) {
 	            console.log(error);
-	            // this.setState(Object.assign({ error }, this.state));
+	            _this2.setState(Object.assign({ error: error }, _this2.state));
 	            // Authentication.logout();
 	            // Authentication.showLogin();
 	          });
