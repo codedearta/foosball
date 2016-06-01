@@ -39826,12 +39826,12 @@
 	          }).catch(function (error) {
 	            console.log(error);
 	            // this.setState(Object.assign({ error }, this.state));
-	            _authentication2.default.logout();
-	            _authentication2.default.showLogin();
+	            // Authentication.logout();
+	            // Authentication.showLogin();
 	          });
 	        } else {
-	          _authentication2.default.showLogin();
-	        }
+	            _authentication2.default.showLogin();
+	          }
 	      }
 	    }
 	  }, {
