@@ -39875,6 +39875,7 @@
 	  function Authentication() {
 	    _classCallCheck(this, Authentication);
 
+	    console.log('creeate new Authentication');
 	    this.lock = new _auth0Lock2.default('y3ng0ydD00ZO865h3Xp3P1MtqKyCNKqJ', 'dearta.eu.auth0.com');
 	  }
 
@@ -39896,18 +39897,19 @@
 	  }, {
 	    key: 'getIdToken',
 	    value: function getIdToken() {
-	      var idToken = localStorage.getItem('idToken');
-	      if (!idToken) {
+
+	      //let idToken = localStorage.getItem('idToken');
+	      if (!this.idToken) {
 	        var authHash = this.lock.parseHash(window.location.hash);
 	        if (!authHash) {
 	          return undefined;
 	        } else if (authHash.error) {
 	          throw authHash.error;
 	        }
-	        idToken = authHash.id_token;
-	        localStorage.setItem('idToken', idToken);
+	        this.idToken = authHash.id_token;
+	        //localStorage.setItem('idToken', idToken);
 	      }
-	      return idToken;
+	      return this.idToken;
 	    }
 	  }, {
 	    key: 'showLogin',
@@ -39917,7 +39919,8 @@
 	  }, {
 	    key: 'logout',
 	    value: function logout() {
-	      localStorage.removeItem('idToken');
+	      // localStorage.removeItem('idToken');
+	      this.idToken = undefined;
 	    }
 	  }]);
 
